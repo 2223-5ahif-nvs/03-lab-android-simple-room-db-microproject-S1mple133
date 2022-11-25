@@ -1,13 +1,14 @@
 package at.htl.airport.entity;
 
-import io.quarkus.hibernate.reactive.panache.PanacheEntity;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Flight extends PanacheEntity {
-    String flightNumber;
+public class Flight extends PanacheEntityBase {
+    @Id
+    Long number;
     LocalDateTime departure;
     LocalDateTime arrival;
     @Enumerated(EnumType.ORDINAL)
@@ -15,8 +16,8 @@ public class Flight extends PanacheEntity {
     @ManyToOne
     Airport airport;
 
-    public Flight(String flightNumber, LocalDateTime departure, LocalDateTime arrival, FlightType flightType, Airport airport) {
-        this.flightNumber = flightNumber;
+    public Flight(Long number, LocalDateTime departure, LocalDateTime arrival, FlightType flightType, Airport airport) {
+        this.number = number;
         this.departure = departure;
         this.arrival = arrival;
         this.flightType = flightType;
@@ -26,12 +27,12 @@ public class Flight extends PanacheEntity {
     public Flight() {
     }
 
-    public String getFlightNumber() {
-        return flightNumber;
+    public Long getNumber() {
+        return number;
     }
 
-    public void setFlightNumber(String flightNumber) {
-        this.flightNumber = flightNumber;
+    public void setNumber(Long flightNumber) {
+        this.number = flightNumber;
     }
 
     public LocalDateTime getDeparture() {
