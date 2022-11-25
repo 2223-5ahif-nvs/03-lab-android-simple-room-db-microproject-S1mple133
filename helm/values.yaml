@@ -5,5 +5,5 @@ image:
 
 ingress:
   host: student.cloud.htl-leonding.ac.at
-  path: /d.pavelescu/airport-backend
+  path: d.pavelescu/airport-backend
 
