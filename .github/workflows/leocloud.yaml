@@ -28,6 +28,14 @@ jobs:
       - name: Convert github registry name to lowercase
         run: echo "IMAGE_REGISTRY=$(echo ${{ env.REGISTRY }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV && ls -al .
 
+      - name: Setup GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          version: 'latest'
+          java-version: '17'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Login to GitHub Registry
         uses: docker/login-action@v2
         with:
@@ -35,10 +43,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Build Quarkus Native Application
+        run: |
+          cd ./backend
+          ./mvnw package -Pnative
+
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          file: ./backend/src/main/docker/Dockerfile.multi-staged.jvm
+          file: ./backend/src/main/docker/Dockerfile.native
           context: backend
           push: true
           tags: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:latest
