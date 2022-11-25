@@ -3,15 +3,19 @@ package at.htl.airport.entity;
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
 import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
+@Entity(name = "AB_Airport")
 public class Airport extends PanacheEntityBase {
-    @Id
+    @Id @Column(name = "a_icao")
     String icao;
+    @Column(name = "a_name")
     String name;
+    @Column(name = "a_city")
     String city;
+    @Column(name = "a_country")
     String country;
 
     public Airport(String icao, String name, String city, String country) {

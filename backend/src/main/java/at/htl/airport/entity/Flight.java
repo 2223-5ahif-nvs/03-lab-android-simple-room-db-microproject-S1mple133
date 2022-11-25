@@ -5,15 +5,20 @@ import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "AB_Flight")
 public class Flight extends PanacheEntityBase {
     @Id
+    @Column(name = "f_number")
     Long number;
+    @Column(name = "f_departure")
     LocalDateTime departure;
+    @Column(name = "f_arrival")
     LocalDateTime arrival;
     @Enumerated(EnumType.ORDINAL)
+    @Column(name = "f_type")
     FlightType flightType;
     @ManyToOne
+    @JoinColumn(name = "f_a_icao")
     Airport airport;
 
     public Flight(Long number, LocalDateTime departure, LocalDateTime arrival, FlightType flightType, Airport airport) {

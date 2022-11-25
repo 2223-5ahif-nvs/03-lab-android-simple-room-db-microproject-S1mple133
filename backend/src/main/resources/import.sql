@@ -1,9 +1,9 @@
-INSERT INTO airport(icao, city, country, name)
+INSERT INTO ab_airport(a_icao, a_city, a_country, a_name)
     VALUES ('SEK', 'Sekondi', 'Ghana', 'Sekondi Airport'),
            ('XRC', 'Firsti', 'Tunisia', 'Express Air Cargo'),
            ('ASD', 'Unknown', 'Egypt', 'Air Sinai');
 
-INSERT INTO flight(number, arrival, departure, flighttype, airport_icao)
+INSERT INTO ab_flight(f_number, f_arrival, f_departure, f_type, f_a_icao)
     VALUES (314, '2022-01-01 12:00:00', '2022-01-01 10:00:00', 0, 'SEK'),
            (271, '2022-01-01 14:00:00', '2022-01-01 12:00:00', 1, 'XRC'),
            (272, '2022-01-01 16:00:00', '2022-01-01 14:00:00', 0, 'SEK'),
