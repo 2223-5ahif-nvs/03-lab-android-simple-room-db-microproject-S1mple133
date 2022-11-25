@@ -1,5 +1,5 @@
 image:
-  repository: ghcr.io/s1mple133/leocloud-demo
+  repository: ghcr.io/2223-5ahif-nvs/03-lab-android-simple-room-db-microproject-s1mple133
   pullPolicy: Always
   tag: latest
 

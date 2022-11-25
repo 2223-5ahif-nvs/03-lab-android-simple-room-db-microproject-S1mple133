@@ -15,9 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REGISTRY: ghcr.io
-    defaults:
-      run:
-        working-directory: ./backend
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -41,7 +38,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          file: ./src/main/docker/Dockerfile.multi-staged.jvm
+          file: ./backend/src/main/docker/Dockerfile.multi-staged.jvm
+          context: backend
           push: true
           tags: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:latest
   deploy:
@@ -77,6 +75,6 @@ jobs:
           kubeconfig: ${{ secrets.KUBECONFIG }}
 
       - name: Upgrade Helm Deployment # to update k8s manifests in the leocloud cluster, doesn't trigger image pull
-        run: helm upgrade --install ${{ env.HELM_RELEASE_NAME }} ./backend/helm --namespace ${{ secrets.LEOCLOUD_NAMESPACE }}
+        run: helm upgrade --install ${{ env.HELM_RELEASE_NAME }} ./helm --namespace ${{ secrets.LEOCLOUD_NAMESPACE }}
       - name: Rollout Restart Deployment # Used to trigger image pull action in the leocloud
         run: kubectl rollout restart deployment ${{ env.DEPLOYMENT_NAME }} --namespace=${{ secrets.LEOCLOUD_NAMESPACE }}
