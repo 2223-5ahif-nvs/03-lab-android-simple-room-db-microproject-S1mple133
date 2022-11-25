@@ -5,11 +5,9 @@ import at.htl.airport.entity.Airport;
 import io.smallrye.mutiny.Uni;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("airport")
@@ -21,5 +19,24 @@ public class AirportResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<List<Airport>> getAllAirports() {
         return airportRepository.listAll();
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Response> createAirport(Airport airport) {
+        return airportRepository.persist(airport)
+                .onItem()
+                .transform(airport1 -> Response.ok(airport1).build())
+                .onFailure()
+                .recoverWithItem(() -> Response.notModified().build());
+    }
+
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{airportIcao}")
+    public Uni<Response> deleteFlight(@PathParam("airportIcao") String icao) {
+        return airportRepository.delete("icao", icao)
+                .onItem()
+                .transform(deleted -> deleted==1 ? Response.ok().build() : Response.notModified().build());
     }
 }

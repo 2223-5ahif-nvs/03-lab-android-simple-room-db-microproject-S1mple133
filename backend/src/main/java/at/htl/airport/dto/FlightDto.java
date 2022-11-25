@@ -1,5 +1,6 @@
 package at.htl.airport.dto;
 
+import at.htl.airport.entity.Airport;
 import at.htl.airport.entity.Flight;
 import at.htl.airport.entity.FlightType;
 
@@ -18,6 +19,16 @@ public record FlightDto(Long flightNumber,
                 flight.getArrival(),
                 flight.getFlightType(),
                 flight.getAirport().getIcao()
+        );
+    }
+
+    public static Flight fromFlightDto(FlightDto flightDto, Airport airport) {
+        return new Flight(
+                flightDto.flightNumber(),
+                flightDto.departure(),
+                flightDto.arrival(),
+                flightDto.flightType(),
+                airport
         );
     }
 }
