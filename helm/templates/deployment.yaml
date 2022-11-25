@@ -24,6 +24,8 @@ spec:
               cpu: "100m"
             limits:
               memory: "218Mi"
+      imagePullSecrets:
+        - name: dockerconfigjson-github-com
 ---
 apiVersion: apps/v1
 kind: Deployment
