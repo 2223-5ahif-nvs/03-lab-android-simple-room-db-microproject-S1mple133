@@ -82,7 +82,7 @@ jobs:
           mv kubelogin/kubelogin kubelogin/kubectl-oidc_login
           echo $(pwd)/kubelogin >> $GITHUB_PATH
 
-      - uses: azure/k8s-set-context@v2
+      - uses: azure/k8s-set-context@v3
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBECONFIG }}
