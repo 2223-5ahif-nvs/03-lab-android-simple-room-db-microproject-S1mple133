@@ -10,13 +10,13 @@ import javax.persistence.Id;
 @Entity(name = "AB_Airport")
 public class Airport extends PanacheEntityBase {
     @Id @Column(name = "a_icao")
-    String icao;
+    private String icao;
     @Column(name = "a_name")
-    String name;
+    private String name;
     @Column(name = "a_city")
-    String city;
+    private String city;
     @Column(name = "a_country")
-    String country;
+    private String country;
 
     public Airport(String icao, String name, String city, String country) {
         this.icao = icao;

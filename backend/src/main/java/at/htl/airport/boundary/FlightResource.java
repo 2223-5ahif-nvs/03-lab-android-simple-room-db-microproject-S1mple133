@@ -3,7 +3,6 @@ package at.htl.airport.boundary;
 import at.htl.airport.control.AirportRepository;
 import at.htl.airport.control.FlightRepository;
 import at.htl.airport.dto.FlightDto;
-import at.htl.airport.entity.Flight;
 import io.smallrye.mutiny.Uni;
 
 import javax.inject.Inject;
@@ -36,9 +35,9 @@ public class FlightResource {
     public Uni<Response> createFlight(FlightDto flightDto) {
         return airportRepository.findByIcao(flightDto.airportIcao())
                 .onItem()
-                .transformToUni(airport -> flightRepository.persist(FlightDto.fromFlightDto(flightDto, airport)))
+                .transformToUni(airport -> flightRepository.persistAndFlush(FlightDto.fromFlightDto(flightDto, airport)))
                 .onItem()
-                .transform(flight -> Response.ok(flight).build())
+                .transform(flight -> Response.ok(FlightDto.fromFlight(flight)).build())
                 .onFailure()
                 .recoverWithItem(() -> Response.notModified().build());
     }

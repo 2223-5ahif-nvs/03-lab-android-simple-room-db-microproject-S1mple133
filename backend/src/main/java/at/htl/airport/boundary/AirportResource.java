@@ -5,6 +5,7 @@ import at.htl.airport.entity.Airport;
 import io.smallrye.mutiny.Uni;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,8 +24,10 @@ public class AirportResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Transactional
     public Uni<Response> createAirport(Airport airport) {
-        return airportRepository.persist(airport)
+        return airportRepository.persistAndFlush(airport)
                 .onItem()
                 .transform(airport1 -> Response.ok(airport1).build())
                 .onFailure()
