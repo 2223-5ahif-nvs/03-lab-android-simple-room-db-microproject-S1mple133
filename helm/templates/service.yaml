@@ -16,7 +16,7 @@ metadata:
   name: airport-postgres-service
 spec:
   selector:
-    app: airport-backend-postgres-deployment
+    app: airport-backend-postgres
   ports:
     - protocol: TCP
       port: 5432
