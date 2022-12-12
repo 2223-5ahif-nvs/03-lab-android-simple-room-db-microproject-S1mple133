@@ -2,13 +2,14 @@ package at.htl.airport_frontend.boundary
 
 import at.htl.airport_frontend.entity.Flight
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 interface FlightAPI {
     @GET("flight")
-    fun getFlights(): List<Flight>
+    suspend fun getFlights(): List<Flight>
 
     companion object {
         var apiService: FlightAPI? = null

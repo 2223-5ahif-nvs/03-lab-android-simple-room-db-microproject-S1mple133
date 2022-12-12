@@ -1,5 +1,6 @@
 package at.htl.airport_frontend.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -16,11 +17,11 @@ class FlightViewModel : ViewModel() {
         viewModelScope.launch {
             val apiService = FlightAPI.getInstance()
             try {
-                val movieList = apiService.getFlights()
-                flightListResponse = movieList
+                val flightList = apiService.getFlights()
+                flightListResponse = flightList
             }
             catch (e: Exception) {
-                errorMessage = e.message.toString()
+                Log.e("tag", e.stackTraceToString());
             }
         }
     }
