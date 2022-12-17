@@ -39,82 +39,47 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    FlightList(mainViewModel.flightListResponse)
-                    mainViewModel.getFlightsList()
+                    MenuList()
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    AirportfrontendTheme {
-        FlightCard(Flight(airportIcao = "ICAO",
-            departure = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE),
-            arrival = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE),
-            flightNumber = 41,
-            flightType = "ARRIVAL"
-        )) {
-
-        }
-    }
-}
-
-@Composable
-fun FlightCard(flight: Flight, openAirportActivity: () -> Unit) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { openAirportActivity }
-            .padding(15.dp),
-        content = {
-            Row(
-                modifier = Modifier.padding(10.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column() {
-                    val icon = if (flight.flightType == "ARRIVAL") R.drawable.arrival
-                    else R.drawable.departure
-
-                    Image(painter = painterResource(id = icon),
-                        contentDescription = "Flight", modifier = Modifier.size(70.dp))
-                }
-                Column() {
-                    Text(text = stringResource(id = R.string.flight_type))
-                    Text(text = stringResource(id = R.string.departure))
-                    Text(text = stringResource(id = R.string.arrival))
-                    Text(text = stringResource(id = R.string.airport))
-                }
-
-                Column() {
-                    Text(text = flight.flightType)
-                    Text(text = formatDateTime(LocalDateTime.parse(flight.departure)))
-                    Text(text = formatDateTime(LocalDateTime.parse(flight.arrival)))
-                    Text(text = flight.airportIcao)
-                }
-            }
-        }
-    )
-}
-
-@Composable
-fun FlightList(flights: List<Flight>) {
+fun MenuList() {
     val mContext = LocalContext.current
 
-    LazyColumn() {
-        items(flights) { flight ->
-            FlightCard(flight = flight) {
-                val intent = Intent(mContext, AirportActivity::class.java)
-                intent.putExtra("ICAO", flight.airportIcao)
-                mContext.startActivity(intent)
-            };
+    Column() {
+        Text(
+            modifier = Modifier
+                .padding(7.dp, 7.dp, 0.dp, 10.dp)
+                .fillMaxWidth(),
+            text = stringResource(R.string.MainHeading)
+        )
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Button(modifier = Modifier
+                .fillMaxWidth()
+                .padding(7.dp, 4.dp),
+                onClick = {
+                    mContext.startActivity(Intent(mContext, FlightListActivity::class.java))
+                }) {
+                Text(text = stringResource(R.string.flightListButton))
+            }
         }
     }
 }
 
-fun formatDateTime(dateTime: LocalDateTime): String {
-    return dateTime.format(DateTimeFormatter.ofPattern(dateTimeFormat));
+@Preview
+@Composable
+fun Preview() {
+    AirportfrontendTheme {
+        // A surface container using the 'background' color from the theme
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            MenuList()
+        }
+    }
 }

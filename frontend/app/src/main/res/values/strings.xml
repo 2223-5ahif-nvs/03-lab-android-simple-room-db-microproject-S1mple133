@@ -3,6 +3,9 @@
     <string name="flight_type">Type</string>
     <string name="departure">Departure</string>
     <string name="arrival">Arrival</string>
-    <string name="airport" >Airport</string>
+    <string name="airport">Airport</string>
     <string name="title_activity_airport">AirportActivity</string>
+    <string name="title_activity_flight_list">FlightListActivity</string>
+    <string name="MainHeading">Choose an option</string>
+    <string name="flightListButton">Flight List</string>
 </resources>
