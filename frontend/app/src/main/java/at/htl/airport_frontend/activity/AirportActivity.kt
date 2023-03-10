@@ -1,4 +1,4 @@
-package at.htl.airport_frontend
+package at.htl.airport_frontend.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
