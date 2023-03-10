@@ -2,12 +2,15 @@ package at.htl.airport_frontend
 
 import android.content.Context
 import androidx.room.Room
+import at.htl.airport_frontend.boundary.FlightAPI
 import at.htl.airport_frontend.persistence.FlightDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -28,4 +31,11 @@ object AppModule {
     @Provides
     fun provideYourDao(db: FlightDatabase) =
         db.flightDao()
+
+    @Singleton
+    @Provides
+    fun provideFlightApi() = Retrofit.Builder()
+        .baseUrl("https://student.cloud.htl-leonding.ac.at/d.pavelescu/airport-backend/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build().create(FlightAPI::class.java);
 }

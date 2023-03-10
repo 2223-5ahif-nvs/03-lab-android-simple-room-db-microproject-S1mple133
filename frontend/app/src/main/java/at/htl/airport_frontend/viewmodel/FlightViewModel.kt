@@ -18,9 +18,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FlightViewModel @Inject constructor(private val flightRepository: FlightRepository)
-    : ViewModel() {
-    var flightListResponse:List<FlightDto> by mutableStateOf(listOf())
+class FlightViewModel @Inject constructor(
+    private val flightRepository: FlightRepository,
+    private val apiService: FlightAPI
+) : ViewModel() {
+    var flightListResponse: List<FlightDto> by mutableStateOf(listOf())
     var favouriteFlightResponse: List<FavouriteFlight> by mutableStateOf(listOf());
 
     init {
@@ -36,12 +38,10 @@ class FlightViewModel @Inject constructor(private val flightRepository: FlightRe
     var errorMessage: String by mutableStateOf("")
     fun getFlightsList() {
         viewModelScope.launch {
-            val apiService = FlightAPI.getInstance()
             try {
                 val flightList = apiService.getFlights()
                 flightListResponse = flightList
-            }
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 Log.e("tag", e.stackTraceToString());
                 errorMessage = "Could not read data from server!";
             }
