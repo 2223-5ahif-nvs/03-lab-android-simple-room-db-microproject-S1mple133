@@ -14,4 +14,5 @@
     <string name="succesfullyMarked">The flight was successfully marked as favourite!</string>
     <string name="success">Success</string>
     <string name="dismiss">Dismiss</string>
+    <string name="delete">Delete</string>
 </resources>

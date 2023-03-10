@@ -3,6 +3,7 @@ package at.htl.airport_frontend.viewmodel
 import android.util.Log
 import androidx.annotation.Nullable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
@@ -23,7 +24,7 @@ class FlightViewModel @Inject constructor(
     private val apiService: FlightAPI
 ) : ViewModel() {
     var flightListResponse: List<FlightDto> by mutableStateOf(listOf())
-    var favouriteFlightResponse: List<FavouriteFlight> by mutableStateOf(listOf());
+    var favouriteFlightResponse: List<FavouriteFlight> by mutableStateOf(listOf())
 
     init {
         flightRepository.getFavouriteFlights().observeForever { sections ->
@@ -50,5 +51,13 @@ class FlightViewModel @Inject constructor(
 
     fun addFavouriteFlight(flight: FlightDto) {
         flightRepository.addFavouriteFlight(FavouriteFlight(0, flight.flightNumber.toInt()));
+        favouriteFlightResponse = listOf()
+        flightRepository.getFavouriteFlights()
+    }
+
+    fun deleteFavouriteFlight(it: FavouriteFlight) {
+        flightRepository.deleteFavouriteFlight(it);
+        favouriteFlightResponse = listOf()
+        flightRepository.getFavouriteFlights()
     }
 }

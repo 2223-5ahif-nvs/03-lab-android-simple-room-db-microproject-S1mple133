@@ -56,7 +56,9 @@ fun TabScreen(viewModel: FlightViewModel) {
             }
         }
         when (tabIndex) {
-            1 -> FavouriteFlightList(viewModel.favouriteFlightResponse)
+            1 -> FavouriteFlightList(viewModel.favouriteFlightResponse) {
+                viewModel.deleteFavouriteFlight(it)
+            }
             0 -> {
                 FlightList(viewModel.flightListResponse) {
                     viewModel.addFavouriteFlight(it)
@@ -67,49 +69,3 @@ fun TabScreen(viewModel: FlightViewModel) {
         }
     }
 }
-
-/*@Composable
-fun MenuList() {
-    val mContext = LocalContext.current
-
-    Column() {
-        Text(
-            modifier = Modifier
-                .padding(7.dp, 7.dp, 0.dp, 10.dp)
-                .fillMaxWidth(),
-            text = stringResource(R.string.MainHeading)
-        )
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Button(modifier = Modifier
-                .fillMaxWidth()
-                .padding(7.dp, 4.dp),
-                onClick = {
-                    mContext.startActivity(Intent(mContext, FlightListActivity::class.java))
-                }) {
-                Text(text = stringResource(R.string.flightListButton))
-            }
-            Button(modifier = Modifier
-                .fillMaxWidth()
-                .padding(7.dp, 4.dp),
-                onClick = {
-                    mContext.startActivity(Intent(mContext, FavouriteListActivity::class.java))
-                }) {
-                Text(text = stringResource(R.string.favouriteListButton))
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun Preview() {
-    AirportfrontendTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
-        ) {
-            MenuList()
-        }
-    }
-}*/

@@ -2,6 +2,7 @@ package at.htl.airport_frontend.persistence
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import at.htl.airport_frontend.entity.FavouriteFlight
@@ -16,4 +17,6 @@ interface FlightDao {
 
     @Insert
     fun insertFlight(vararg favouriteFlights: FavouriteFlight)
+    @Delete
+    fun delete(favFlight: FavouriteFlight)
 }

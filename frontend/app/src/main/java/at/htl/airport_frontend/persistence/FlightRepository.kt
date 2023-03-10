@@ -21,5 +21,10 @@ class FlightRepository @Inject constructor(private val flightDao: FlightDao) {
     }
 
     fun getFavouriteFlights(): LiveData<List<FavouriteFlight>> = flightDao.getAll();
+    fun deleteFavouriteFlight(favFlight: FavouriteFlight) {
+        coroutineScope.launch(Dispatchers.IO) {
+            flightDao.delete(favFlight)
+        }
+    }
 
 }
