@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -73,18 +74,20 @@ fun FlightCard(flight: FlightDto, openAirportActivity: () -> Unit, onClick: (Fli
                         Text(text = stringResource(id = R.string.departure))
                         Text(text = stringResource(id = R.string.arrival))
                         Text(text = stringResource(id = R.string.airport))
+                        Text(text = stringResource(id = R.string.flight_number))
                     }
 
                     Column() {
                         Text(text = formatDateTime(LocalDateTime.parse(flight.departure)))
                         Text(text = formatDateTime(LocalDateTime.parse(flight.arrival)))
                         Text(text = flight.airportIcao)
+                        Text(text = "" + flight.flightNumber)
                     }
                 }
 
                 Row(modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 10.dp),
+                    .padding(16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically) {
                     Button(onClick = {onClick(flight)}) {
