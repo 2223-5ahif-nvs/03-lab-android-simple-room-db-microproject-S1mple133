@@ -16,25 +16,7 @@
         android:theme="@style/Theme.Airportfrontend"
         tools:targetApi="31">
         <activity
-            android:name=".FlightListActivity"
-            android:exported="false"
-            android:label="@string/title_activity_flight_list"
-            android:theme="@style/Theme.Airportfrontend">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".FavouriteListActivity"
-            android:exported="false"
-            android:label="@string/title_activity_favourite_list"
-            android:theme="@style/Theme.Airportfrontend">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".AirportActivity"
+            android:name=".activity.AirportActivity"
             android:exported="false"
             android:label="@string/title_activity_airport"
             android:theme="@style/Theme.Airportfrontend">
@@ -43,14 +25,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".AirportView"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Airportfrontend">

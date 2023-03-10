@@ -7,17 +7,20 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import at.htl.airport_frontend.R
 import at.htl.airport_frontend.ui.theme.AirportfrontendTheme
 import at.htl.airport_frontend.viewmodel.FlightViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 const val dateTimeFormat: String = "dd.MM.yyyy hh:mm"
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val mainViewModel by viewModels<FlightViewModel>()
 
@@ -30,7 +33,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MenuList()
+                    TabScreen(mainViewModel)
                 }
             }
         }
@@ -38,6 +41,34 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+fun TabScreen(viewModel: FlightViewModel) {
+    var tabIndex by remember { mutableStateOf(0) }
+
+    val tabs = listOf("Flights", "Favourites")
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        TabRow(selectedTabIndex = tabIndex) {
+            tabs.forEachIndexed { index, title ->
+                Tab(text = { Text(title) },
+                    selected = tabIndex == index,
+                    onClick = { tabIndex = index }
+                )
+            }
+        }
+        when (tabIndex) {
+            1 -> FavouriteFlightList(viewModel.favouriteFlightResponse)
+            0 -> {
+                FlightList(viewModel.flightListResponse) {
+                    viewModel.addFavouriteFlight(it)
+                }
+
+                viewModel.getFlightsList()
+            }
+        }
+    }
+}
+
+/*@Composable
 fun MenuList() {
     val mContext = LocalContext.current
 
@@ -81,4 +112,4 @@ fun Preview() {
             MenuList()
         }
     }
-}
+}*/
