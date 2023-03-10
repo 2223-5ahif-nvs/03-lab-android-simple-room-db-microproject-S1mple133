@@ -91,10 +91,10 @@ fun FlightCard(flight: FlightDto, openAirportActivity: () -> Unit, onClick: (Fli
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically) {
                     Button(onClick = {onClick(flight)}) {
-                        Text(text = "Mark as favourite")
+                        Text(text = stringResource(id = R.string.favorite))
                     }
                     Button(onClick = openAirportActivity) {
-                        Text(text = "Airport Details")
+                        Text(text = stringResource(id = R.string.airportDetails))
                     }
                 }
             }

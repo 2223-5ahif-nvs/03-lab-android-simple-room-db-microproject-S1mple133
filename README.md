@@ -11,8 +11,8 @@
 ## Features
 
 * Ability to view available flights
-* Flights can be added to the favourite list
-* Flights can be removed from the favourite list
+* Flights can be added to the favorite list
+* Flights can be removed from the favorite list
 
 ### Backend
 
@@ -29,20 +29,14 @@
 
 ## Screenshots
 
-### Flight list
-
-<img src="img/flight-list.png"
+<p align="center" class="display:flex;justify-content:space-around;">
+     <img src="img/flight-list.png"
      alt="Markdown Monster icon"
      style="width: 300px;" />
-
-### Popup when adding flight to favorites
-
-<img src="img/added-flight.png"
+     <img src="img/added-flight.png"
+     alt="Markdown Monster icon"
+     style="width: 300px;"/>
+     <img src="img/favorite-flights.png"
      alt="Markdown Monster icon"
      style="width: 300px;" />
-    
-### Favorite flights
-
-<img src="img/favorite-flights.png"
-     alt="Markdown Monster icon"
-     style="width: 300px;" />
+</p>
