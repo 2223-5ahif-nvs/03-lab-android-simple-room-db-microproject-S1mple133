@@ -11,4 +11,7 @@
     <string name="flight_number">Flight number</string>
     <string name="favouriteListButton">Favourite flights</string>
     <string name="title_activity_favourite_list">FavouriteFlightActivity</string>
+    <string name="succesfullyMarked">The flight was successfully marked as favourite!</string>
+    <string name="success">Success</string>
+    <string name="dismiss">Dismiss</string>
 </resources>
