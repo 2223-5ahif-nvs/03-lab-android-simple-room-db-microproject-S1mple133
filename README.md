@@ -1,6 +1,18 @@
-# Microprojekt Pavelescu Darius
+# Microprojekt Airplane Flights
+
+![CD workflow](https://github.com/2223-5ahif-nvs/03-lab-android-simple-room-db-microproject-S1mple133/actions/workflows/leocloud.yaml/badge.svg)
+
+<p align="center">
+<img src="img/airplane.jpg"
+     alt="Markdown Monster icon"
+     style="width: 500px;" />
+</p>
 
 ## Features
+
+* Ability to view available flights
+* Flights can be added to the favourite list
+* Flights can be removed from the favourite list
 
 ### Backend
 
@@ -13,3 +25,24 @@
 ### Frontend (Jetpack Compose)
 
 * Retrofit used for REST
+* RoomDB used to persist favorite flights
+
+## Screenshots
+
+### Flight list
+
+<img src="img/flight-list.png"
+     alt="Markdown Monster icon"
+     style="width: 300px;" />
+
+### Popup when adding flight to favorites
+
+<img src="img/added-flight.png"
+     alt="Markdown Monster icon"
+     style="width: 300px;" />
+    
+### Favorite flights
+
+<img src="img/favorite-flights.png"
+     alt="Markdown Monster icon"
+     style="width: 300px;" />

@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
 fun TabScreen(viewModel: FlightViewModel) {
     var tabIndex by remember { mutableStateOf(0) }
 
-    val tabs = listOf("Flights", "Favourites")
+    val tabs = listOf("Flights", "Favorites")
 
     Column(modifier = Modifier.fillMaxWidth()) {
         TabRow(selectedTabIndex = tabIndex) {
