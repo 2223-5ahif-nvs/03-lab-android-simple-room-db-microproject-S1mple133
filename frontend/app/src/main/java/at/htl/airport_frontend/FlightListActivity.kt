@@ -22,12 +22,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import at.htl.airport_frontend.entity.Flight
+import at.htl.airport_frontend.entity.FlightDto
 import at.htl.airport_frontend.ui.theme.AirportfrontendTheme
 import at.htl.airport_frontend.viewmodel.FlightViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+@AndroidEntryPoint
 class FlightListActivity : ComponentActivity() {
     private val mainViewModel by viewModels<FlightViewModel>()
 
@@ -39,7 +41,9 @@ class FlightListActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    FlightList(mainViewModel.flightListResponse)
+                    FlightList(mainViewModel.flightListResponse) {
+                        mainViewModel.addFavouriteFlight(it)
+                    }
                     mainViewModel.getFlightsList()
                 }
             }
@@ -52,24 +56,23 @@ class FlightListActivity : ComponentActivity() {
 fun DefaultPreview() {
     AirportfrontendTheme {
         FlightCard(
-            Flight(airportIcao = "ICAO",
-            departure = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE),
-            arrival = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE),
-            flightNumber = 41,
-            flightType = "ARRIVAL"
+            FlightDto(
+                airportIcao = "ICAO",
+                departure = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE),
+                arrival = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE),
+                flightNumber = 41,
+                flightType = "ARRIVAL"
+            ), onClick = {}, openAirportActivity = {}
         )
-        ) {
-
-        }
     }
 }
 
 @Composable
-fun FlightCard(flight: Flight, openAirportActivity: () -> Unit) {
+fun FlightCard(flight: FlightDto, openAirportActivity: () -> Unit, onClick: (FlightDto) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { openAirportActivity }
+            .clickable { onClick(flight) } // TODO: add airport activity
             .padding(15.dp),
         content = {
             Row(
@@ -81,8 +84,10 @@ fun FlightCard(flight: Flight, openAirportActivity: () -> Unit) {
                     val icon = if (flight.flightType == "ARRIVAL") R.drawable.arrival
                     else R.drawable.departure
 
-                    Image(painter = painterResource(id = icon),
-                        contentDescription = "Flight", modifier = Modifier.size(70.dp))
+                    Image(
+                        painter = painterResource(id = icon),
+                        contentDescription = "Flight", modifier = Modifier.size(70.dp)
+                    )
                 }
                 Column() {
                     Text(text = stringResource(id = R.string.flight_type))
@@ -103,16 +108,18 @@ fun FlightCard(flight: Flight, openAirportActivity: () -> Unit) {
 }
 
 @Composable
-fun FlightList(flights: List<Flight>) {
+fun FlightList(flights: List<FlightDto>, onClick: (FlightDto) -> Unit) {
     val mContext = LocalContext.current
 
     LazyColumn() {
         items(flights) { flight ->
-            FlightCard(flight = flight) {
-                val intent = Intent(mContext, AirportActivity::class.java)
-                intent.putExtra("ICAO", flight.airportIcao)
-                mContext.startActivity(intent)
-            };
+            FlightCard(flight = flight,
+                onClick = onClick,
+                openAirportActivity = {
+                    val intent = Intent(mContext, AirportActivity::class.java)
+                    intent.putExtra("ICAO", flight.airportIcao)
+                    mContext.startActivity(intent)
+                })
         }
     }
 }

@@ -8,4 +8,7 @@
     <string name="title_activity_flight_list">FlightListActivity</string>
     <string name="MainHeading">Choose an option</string>
     <string name="flightListButton">Flight List</string>
+    <string name="flight_number">Flight number</string>
+    <string name="favouriteListButton">Favourite flights</string>
+    <string name="title_activity_favourite_list">FavouriteFlightActivity</string>
 </resources>

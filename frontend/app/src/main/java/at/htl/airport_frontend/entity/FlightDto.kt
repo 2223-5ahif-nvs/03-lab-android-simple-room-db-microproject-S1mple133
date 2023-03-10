@@ -1,8 +1,6 @@
 package at.htl.airport_frontend.entity
 
-import java.time.LocalDateTime
-
-data class Flight (
+data class FlightDto (
     val flightNumber: Number,
     val departure: String,
     val arrival: String,
