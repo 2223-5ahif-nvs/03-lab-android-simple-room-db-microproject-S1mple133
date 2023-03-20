@@ -22,6 +22,13 @@ public class AirportResource {
         return airportRepository.listAll();
     }
 
+    @GET
+    @Path("/{icao}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Airport> getByICAO(@PathParam("icao") String icao) {
+        return airportRepository.findByIcao(icao);
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
