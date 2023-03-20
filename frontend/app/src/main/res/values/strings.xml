@@ -17,4 +17,8 @@
     <string name="delete">Delete</string>
     <string name="favorite">Mark as favorite</string>
     <string name="airportDetails">Airport Details</string>
+    <string name="name">Name</string>
+    <string name="icao">ICAO</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
 </resources>
