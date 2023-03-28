@@ -50,7 +50,16 @@ class FlightViewModel @Inject constructor(
     }
 
     fun addFavouriteFlight(flight: FlightDto) {
-        flightRepository.addFavouriteFlight(FavouriteFlight(0, flight.flightNumber.toInt()));
+        flightRepository.addFavouriteFlight(
+            FavouriteFlight(
+                0,
+                flight.flightNumber.toInt(),
+                airportIcao = flight.airportIcao,
+                arrival = flight.arrival,
+                flightType = flight.flightType,
+                departure = flight.departure
+            )
+        );
         favouriteFlightResponse = listOf()
         flightRepository.getFavouriteFlights()
     }

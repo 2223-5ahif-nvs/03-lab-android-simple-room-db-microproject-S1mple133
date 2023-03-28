@@ -19,6 +19,7 @@ import at.htl.airport_frontend.ui.theme.AirportfrontendTheme
 import at.htl.airport_frontend.viewmodel.FlightViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import at.htl.airport_frontend.R
+import java.time.LocalDateTime
 
 @Composable
 fun FavouriteFlightCard(flight: FavouriteFlight, onDelete: (FavouriteFlight) -> Unit) {
@@ -29,22 +30,32 @@ fun FavouriteFlightCard(flight: FavouriteFlight, onDelete: (FavouriteFlight) -> 
         content = {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column() {
+                        Text(text = stringResource(id = R.string.departure))
+                        Text(text = stringResource(id = R.string.arrival))
+                        Text(text = stringResource(id = R.string.airport))
                         Text(text = stringResource(id = R.string.flight_number))
+                        Text(text = stringResource(id = R.string.flight_type))
                     }
 
                     Column() {
+                        Text(text = formatDateTime(LocalDateTime.parse(flight.departure)))
+                        Text(text = formatDateTime(LocalDateTime.parse(flight.arrival)))
+                        Text(text = flight.airportIcao)
                         Text(text = "" + flight.flightNumber)
+                        Text(text = flight.flightType)
                     }
                 }
 
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically

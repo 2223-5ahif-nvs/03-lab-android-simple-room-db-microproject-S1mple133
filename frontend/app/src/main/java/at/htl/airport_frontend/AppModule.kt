@@ -25,7 +25,9 @@ object AppModule {
         app,
         FlightDatabase::class.java,
         "flightdb"
-    ).build() // The reason we can construct a database for the repo
+    )
+        .fallbackToDestructiveMigration() // Delete database when migrating
+        .build() // The reason we can construct a database for the repo
 
     @Singleton
     @Provides
