@@ -43,7 +43,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TabScreen(viewModel: FlightViewModel) {
     var tabIndex by remember { mutableStateOf(0) }
-
     val tabs = listOf("Flights", "Favorites")
 
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -60,7 +59,8 @@ fun TabScreen(viewModel: FlightViewModel) {
                 viewModel.deleteFavouriteFlight(it)
             }
             0 -> {
-                FlightList(viewModel.flightListResponse) {
+
+                FilteredFlightList(viewModel.flightListResponse) {
                     viewModel.addFavouriteFlight(it)
                 }
 

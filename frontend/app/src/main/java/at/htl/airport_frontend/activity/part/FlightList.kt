@@ -11,14 +11,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import at.htl.airport_frontend.R
@@ -103,9 +103,8 @@ fun FlightCard(flight: FlightDto, openAirportActivity: () -> Unit, onClick: (Fli
 }
 
 @Composable
-fun FlightList(flights: List<FlightDto>, onClick: (FlightDto) -> Unit) {
+fun FlightList(flights: List<FlightDto>, onClick: (FlightDto) -> Unit, icao: String, onlyDepartures: Boolean) {
     val mContext = LocalContext.current
-
     val openDialog = remember { mutableStateOf(false)  }
 
     if (openDialog.value) {
@@ -136,16 +135,66 @@ fun FlightList(flights: List<FlightDto>, onClick: (FlightDto) -> Unit) {
 
     LazyColumn() {
         items(flights) { flight ->
-            FlightCard(flight = flight,
-                onClick = {
-                          onClick(it)
-                    openDialog.value = true
-                },
-                openAirportActivity = {
-                    val intent = Intent(mContext, AirportActivity::class.java)
-                    intent.putExtra("ICAO", flight.airportIcao)
-                    mContext.startActivity(intent)
-                })
+            if((icao.isBlank() || flight.airportIcao.lowercase().contains(icao.lowercase())) &&
+                (!onlyDepartures || flight.flightType == "DEPARTURE")) {
+                FlightCard(flight = flight,
+                    onClick = {
+                        onClick(it)
+                        openDialog.value = true
+                    },
+                    openAirportActivity = {
+                        val intent = Intent(mContext, AirportActivity::class.java)
+                        intent.putExtra("ICAO", flight.airportIcao)
+                        mContext.startActivity(intent)
+                    })
+            }
+        }
+    }
+}
+
+@Composable
+fun FilteredFlightList(flights: List<FlightDto>, onClick: (FlightDto) -> Unit) {
+    var icao = remember { mutableStateOf("")  }
+    val onlyDepartures = remember { mutableStateOf(true) }
+
+    FlightAirportFilter(newIcao = {
+        icao.value = it.lowercase()
+    }) {
+        onlyDepartures.value = it;
+    }
+
+
+    FlightList(flights, onClick, icao.value, onlyDepartures.value)
+}
+
+@Composable
+fun FlightAirportFilter(newIcao: (String) -> Unit, checkedChange: (Boolean) -> Unit) {
+    var text by remember { mutableStateOf(TextFieldValue("")) }
+    val checkedState = remember { mutableStateOf(false) }
+
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(vertical = 20.dp,horizontal = 20.dp),
+        verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.Start) {
+        TextField(
+            value = text,
+            onValueChange = {
+                newIcao(it.text)
+                text = it
+            },
+            label = { Text(text = "Airport ICAO Filter ") },
+            placeholder = { Text(text = "SEK") },
+        )
+
+        Row(horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(
+                checked = checkedState.value,
+                onCheckedChange = { checkedState.value = it; checkedChange(it)}
+            )
+
+            Text(text = stringResource(id = R.string.checkBoxDeptOnly))
         }
     }
 }

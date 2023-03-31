@@ -11,7 +11,12 @@ import java.util.concurrent.Flow
 
 @Dao
 interface FlightDao {
-    @Query("select * from favourite_flight")
+    @Query("select id, " +
+            "flightNumber, " +
+            "departure, " +
+            "arrival, " +
+            "flightType, " +
+            "airportIcao from favourite_flight")
     fun getAll(): LiveData<List<FavouriteFlight>>
 
 
