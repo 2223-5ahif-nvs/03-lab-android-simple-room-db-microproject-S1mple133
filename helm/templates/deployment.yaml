@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airport-backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airport-backend-deployment
+  template:
+    metadata:
+      labels:
+        app: airport-backend-deployment
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "218Mi"
+      imagePullSecrets:
+        - name: dockerconfigjson-github-com
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airport-backend-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airport-backend-postgres
+  template:
+    metadata:
+      labels:
+        app: airport-backend-postgres
+    spec:
+      containers:
+        - name: airport-backend-postgres
+          image: postgres:15.1
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"

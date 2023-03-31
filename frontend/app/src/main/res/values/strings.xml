@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">airport-frontend</string>
+    <string name="flight_type">Type</string>
+    <string name="departure">Departure</string>
+    <string name="arrival">Arrival</string>
+    <string name="airport">Airport</string>
+    <string name="title_activity_airport">AirportActivity</string>
+    <string name="title_activity_flight_list">FlightListActivity</string>
+    <string name="MainHeading">Choose an option</string>
+    <string name="flightListButton">Flight List</string>
+    <string name="flight_number">Flight number</string>
+    <string name="favouriteListButton">Favorite flights</string>
+    <string name="title_activity_favourite_list">FavoriteFlightActivity</string>
+    <string name="succesfullyMarked">The flight was successfully marked as favorite!</string>
+    <string name="success">Success</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="delete">Delete</string>
+    <string name="favorite">Mark as favorite</string>
+    <string name="airportDetails">Airport Details</string>
+    <string name="name">Name</string>
+    <string name="icao">ICAO</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="checkBoxDeptOnly">Departure only</string>
+</resources>
